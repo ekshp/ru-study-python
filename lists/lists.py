@@ -10,7 +10,10 @@ class ListExercise:
         """
         if not input_list:
             return input_list
-        max_value = max(input_list)
+        max_value = 0
+        for value in input_list:
+            if value > max_value:
+                max_value = value
         output_list = []
         for i in input_list:
             if i > 0:
