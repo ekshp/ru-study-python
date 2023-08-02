@@ -14,15 +14,11 @@ class MapExercise:
         :return: Средний рейтинг фильмов у которых две или больше стран
         """
 
-        def get_rating(movie: dict) -> float:
-            # print(len(movie.get('country', [])) >= 2)
-            if movie['rating_kinopoisk'] != '0' and movie['rating_kinopoisk'] != ''\
-                    and len(movie.get('country', [])) > 1 \
-                    and (movie['rating_kinopoisk'] != ''):
+        def get_rating(movie):
+            if movie['rating_kinopoisk'] != '0' and movie['rating_kinopoisk'] != '' and len(movie['country']) > 1:
                 return float(movie['rating_kinopoisk'])
 
-        ratings = list(filter(lambda x: x is not None, map(get_rating, list_of_movies)))
-        # ratings = list(map(lambda x: x is not None, map(get_rating, list_of_movies)))
+        ratings = list(filter(None, map(get_rating, list_of_movies)))
         if ratings:
             return sum(ratings) / len(ratings)
         else:
@@ -41,11 +37,9 @@ class MapExercise:
         :return: Количество букв 'и' в названиях всех фильмов с рейтингом больше
         или равным заданному значению
         """
-        movie_list = list(filter(lambda movie: movie["rating_kinopoisk"]
-                                               and float(movie["rating_kinopoisk"]) >= rating, list_of_movies))
-        filtered_list = list(map(lambda movie: movie["name"], movie_list))
-        count = 0
-        for movie in filtered_list:
-            count += movie.count("и")
+        def letter_count(film):
+            if film['rating_kinopoisk'] != '' and float(film['rating_kinopoisk']) >= rating:
+                return film['name'].count('и')
 
-        return count
+        result = sum(filter(None, map(letter_count, list_of_movies)))
+        return result

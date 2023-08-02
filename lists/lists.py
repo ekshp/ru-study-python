@@ -1,6 +1,6 @@
 class ListExercise:
     @staticmethod
-    def replace(input_list: list[int]) -> list[int]:
+    def replace(input_list):
         if not input_list:
             return input_list
         max_value = max(input_list)
@@ -13,7 +13,7 @@ class ListExercise:
         return output_list
 
     @staticmethod
-    def search(input_list: list[int], query: int) -> int:
+    def search(input_list, query):
         low = 0
         high = len(input_list) - 1
         middle = (low + high) // 2
