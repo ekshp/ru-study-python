@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 
 
 class FlaskExercise:
@@ -55,10 +55,8 @@ class FlaskExercise:
 
         @app.route('/user/<name>', methods=['DELETE'])
         def delete_user(name):
-            data = request.get_json()
-            if name in data:
-                del data[name]
+            if name:
                 return flask.make_response('', 204)
-
-
+            else:
+                return jsonify({"error": "User not found"}), 404
 

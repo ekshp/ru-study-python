@@ -17,8 +17,8 @@ class FilterMapExercise:
         """
         result = []
         for i in input_array:
-            condition, value = func(i)
-            if condition:
+            state, value = func(i)
+            if state:
                 result.append(value)
         return result
 
