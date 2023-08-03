@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, request, jsonify
 
 
@@ -54,7 +55,10 @@ class FlaskExercise:
 
         @app.route('/user/<name>', methods=['DELETE'])
         def delete_user(name):
-            if name:
-                response = {"errors": {"name": "This field is required"}}
-                return jsonify(response), 204
+            data = request.get_json()
+            if name in data:
+                del data[name]
+                return flask.make_response('', 204)
+
+
 

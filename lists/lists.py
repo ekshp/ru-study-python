@@ -3,7 +3,10 @@ class ListExercise:
     def replace(input_list: list[int]) -> list[int]:
         if not input_list:
             return input_list
-        max_value = max(input_list)
+        max_value = 0
+        for i in input_list:
+            if i > max_value:
+                max_value = i
         output_list = []
         for i in input_list:
             if i > 0:
@@ -25,6 +28,4 @@ class ListExercise:
                 low = middle + 1
             else:
                 high = middle - 1
-
         return -1
-

@@ -20,7 +20,6 @@ class FilterMapExercise:
             condition, value = func(i)
             if condition:
                 result.append(value)
-            print(result)
         return result
 
 
