@@ -26,32 +26,35 @@ class FlaskExercise:
             data = request.get_json()
             if 'name' not in data:
                 return jsonify({"errors": {"name": "This field is required"}}), 422
-            names['name'] = data['name']
-            return jsonify({"data": f"User {names['name']} is created!"}), 201
+            names[data['name']] = {}
+            return jsonify({"data": f"User {data['name']} is created!"}), 201
 
         """ GET /user/<name> - чтение пользователя
             В ответе должен вернуться JSON {"data": "My name is <name>"}. Статус 200"""
         @app.route('/user/<name>', methods=['GET'])
         def read_user(name):
-            if name in names['name']:
+            if name in names:
                 return jsonify({"data": f"My name is {name}"}), 200
             else:
                 return jsonify({"error": "User not found"}), 404
+
         """ PATCH /user/<name> - обновление пользователя
             В теле запроса приходит JSON в формате {"name": <new_name>}.
             В ответе должен вернуться JSON {"data": "My name is <new_name>"}. Статус 200"""
         @app.route('/user/<name>', methods=['PATCH'])
         def update_user(name):
+            if name not in names:
+                return jsonify({"error": "User not found"}), 404
             data = request.get_json()
-            names['name'] = data['name']
+            names[data['name']] = names.pop(name)
             return jsonify({"data": f"My name is {data['name']}"}), 200
 
         """ DELETE /user/<name> - удаление пользователя
                 В ответ должен вернуться статус 204"""
         @app.route('/user/<name>', methods=['DELETE'])
         def delete_user(name):
-            for key, value in names.items():
-                if value == name:
-                    names.pop(key)
-                    return 204
-            return jsonify({"error": "User not found"}), 404
+            if name in names:
+                del names[name]
+                return '', 204
+            else:
+                return jsonify({"error": "User not found"}), 404
