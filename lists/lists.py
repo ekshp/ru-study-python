@@ -10,7 +10,10 @@ class ListExercise:
         """
         if not input_list:
             return input_list
-        max_value = max(input_list)
+        max_value = 0
+        for value in input_list:
+            if value > max_value:
+                max_value = value
         output_list = []
         for i in input_list:
             if i > 0:
@@ -29,15 +32,19 @@ class ListExercise:
         :param query: Искомый элемент
         :return: Номер элемента
         """
-        low = 0
-        high = len(input_list) - 1
-        while low <= high:
-            middle = (low + high) // 2
-            if query == input_list[middle]:
-                return middle
-            elif query > input_list[middle]:
-                low = middle + 1
-            else:
-                high = middle - 1
-        return -1
+        if len(input_list) == 0 or input_list[-1] < query:
+            return -1
+        else:
+            def binary_func(low, high):
+
+                if low > high:
+                    return -1
+                middle = (low + high) // 2
+                if query == input_list[middle]:
+                    return middle
+                elif query > input_list[middle]:
+                    return binary_func(middle + 1, high)
+                else:
+                    return binary_func(low, middle - 1)
+            return binary_func(0, len(input_list) - 1)
 
