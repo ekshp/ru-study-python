@@ -15,7 +15,8 @@ class MapExercise:
         """
 
         def get_rating(movie):
-            if movie['rating_kinopoisk'] != '0' and movie['rating_kinopoisk'] != '' and len(movie['country']) > 1:
+            if movie['rating_kinopoisk'] != '0' and movie['rating_kinopoisk'] != '' \
+                    and len(movie['country'].split(',')) > 1:
                 return float(movie['rating_kinopoisk'])
 
         ratings = list(filter(None, map(get_rating, list_of_movies)))
